@@ -23,10 +23,16 @@ import type { Status } from "@prisma/client";
  *   - Revalidate the dashboard cache
  */
 
+/** Prisma CUID format: "c" followed by 24 lowercase alphanumeric chars. */
+const CUID_REGEX = /^c[a-z0-9]{24}$/;
+
 async function requireUserId(): Promise<string> {
   const session = await auth();
   const userId = (session?.user as { id?: string } | undefined)?.id;
-  if (!userId) {
+  // Stale sessions created before the PrismaAdapter fix carry the Google
+  // `sub` (long numeric id) instead of the DB row CUID. Rejecting these
+  // forces a clean re-login and prevents P2003 foreign-key failures.
+  if (!userId || !CUID_REGEX.test(userId) || userId.length !== 25) {
     throw new Error("Unauthorized");
   }
   return userId;

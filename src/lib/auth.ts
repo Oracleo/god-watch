@@ -2,9 +2,22 @@ import type { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 
 /**
- * Auth.js (NextAuth v5) configuration.
- * Google OAuth only. Prisma adapter for persistent accounts/sessions.
- * JWT session strategy for edge-compatible, zero-DB hot-path auth.
+ * Auth.js (NextAuth v5) EDGE-SAFE configuration.
+ * Google OAuth only.
+ *
+ * IMPORTANT: This file MUST NOT import Prisma / @/lib/prisma.
+ * Next.js middleware runs on the Edge Runtime, which cannot load
+ * PrismaClient. The PrismaAdapter is attached in `src/auth.ts`
+ * (Node runtime) by spreading `...authConfig` into the real instance.
+ *
+ * CRITICAL FIX for "Something went wrong" errors: the server instance
+ * in `src/auth.ts` now wires PrismaAdapter(prisma), so Google OAuth
+ * users are persisted as `User` rows in Supabase. The JWT `user.id`
+ * then matches the real DB row id, and every per-user Prisma action
+ * (createTask, updateStatus, saveNote, updateSettings, ...) passes the
+ * foreign-key check. Without the adapter, users had no DB row and all
+ * writes failed with P2003 (FK violation) — surfacing as the generic
+ * error boundary.
  */
 export const authConfig = {
   providers: [

@@ -21,7 +21,7 @@ export function NotificationsButton() {
         <div className="space-y-2">
           <h3 className="text-sm font-semibold">Notifications</h3>
           <p className="text-sm text-muted-foreground">
-            You're all caught up. ✨
+            You&apos;re all caught up. ✨
           </p>
         </div>
       </PopoverContent>

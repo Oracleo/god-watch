@@ -8,7 +8,6 @@ import {
   Flame,
   TrendingUp,
   Trophy,
-  XCircle,
   AlertCircle,
   Award,
 } from "lucide-react";

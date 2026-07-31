@@ -82,7 +82,7 @@ export const useTaskStore = create<TaskStore>()(
       setOffline: (offline) => set({ offline }),
 
       cycleStatus: (taskId, date, next, optimisticApply) => {
-        const prev =
+        const _prev =
           get().statuses[taskId]?.[date] ?? ("PENDING" as StatusValue);
         set((s) => ({
           statuses: {

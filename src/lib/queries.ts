@@ -64,13 +64,12 @@ export async function getNotes(userId: string): Promise<Record<string, string>> 
 export async function getDashboardSummary(
   userId: string
 ): Promise<DashboardSummary> {
-  const [tasks, statuses, allStatuses] = await Promise.all([
+  const [tasks, statuses] = await Promise.all([
     prisma.task.findMany({ where: { userId, archived: false }, select: { id: true } }),
     prisma.taskStatus.findMany({
       where: { task: { userId } },
       select: { taskId: true, date: true, status: true },
     }),
-    null,
   ]);
 
   const today = new Date().toISOString().slice(0, 10);

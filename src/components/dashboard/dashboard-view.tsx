@@ -17,7 +17,7 @@ import { NotesPanel } from "@/components/dashboard/notes-panel";
 import { AddTask } from "@/components/dashboard/add-task";
 import { Button } from "@/components/ui/button";
 import { rangeISODates, toISODate, formatDateShort } from "@/lib/utils";
-import { STATUS_CYCLE, STATUS_TOASTS, APP_NAME } from "@/lib/constants";
+import { STATUS_CYCLE, STATUS_TOASTS } from "@/lib/constants";
 import type { StatusValue, TaskDTO } from "@/types";
 import {
   createTask,
@@ -65,7 +65,6 @@ export function DashboardView({
     removeTask: storeRemoveTask,
     pushUndo,
     popUndo,
-    setFocusedCell,
     focusedCell,
     offline,
     setOffline,

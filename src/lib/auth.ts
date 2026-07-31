@@ -1,6 +1,5 @@
 import type { NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
-import { prisma } from "@/lib/prisma";
 
 /**
  * Auth.js (NextAuth v5) configuration.

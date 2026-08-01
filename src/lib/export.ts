@@ -70,19 +70,5 @@ export async function exportToPDF(rows: ExportRow[], filename = "god-watch-expor
   doc.save(filename);
 }
 
-/** Build export rows from a date→status map. */
-export function buildExportRows(
-  tasks: { id: string; name: string }[],
-  statuses: Record<string, Record<string, string>>,
-  days: string[]
-): ExportRow[] {
-  const rows: ExportRow[] = [];
-  for (const task of tasks) {
-    for (const date of days) {
-      const status = statuses[task.id]?.[date] ?? "PENDING";
-      rows.push({ task: task.name, date, status });
-    }
-  }
-  return rows;
-}
+// buildExportRows moved to src/lib/export-helpers.ts (no "use client")
 

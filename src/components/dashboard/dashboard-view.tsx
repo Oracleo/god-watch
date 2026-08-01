@@ -83,12 +83,14 @@ export function DashboardView({
     }
   }, [initialTasks, initialStatuses, initialNotes, setTasks, setStatuses, setNote]);
 
-  // Day range for the date rail
+  // Day range for the date rail — TODAY FIRST, then previous 89 days below
   const days = React.useMemo(() => {
-    const end = new Date();
-    const start = new Date();
-    start.setDate(end.getDate() - (DAY_RANGE_DAYS - 1));
-    return rangeISODates(start, end);
+    const today = new Date();
+    const start = new Date(today);
+    start.setDate(today.getDate() - (DAY_RANGE_DAYS - 1));
+    const allDays = rangeISODates(start, today);
+    // Reverse so newest (today) is first
+    return allDays.reverse();
   }, []);
 
   // Auto-scroll to today on mount
@@ -277,7 +279,7 @@ export function DashboardView({
     if (!res.ok) throw new Error(res.message);
   };
 
-  // Group days by month for separators
+  // Month separators in the vertical date rail (not the task columns)
   const monthGroups = React.useMemo(() => {
     const groups: { month: string; date: string }[] = [];
     let lastMonth = "";

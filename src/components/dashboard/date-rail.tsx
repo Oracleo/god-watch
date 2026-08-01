@@ -39,8 +39,9 @@ export const DateRail = React.forwardRef<HTMLDivElement, DateRailProps>(
             const month = d.toLocaleDateString("en-US", { month: "short" });
 
             return (
-              <Button
+<Button
                 key={date}
+                data-date={date}
                 variant="ghost"
                 onClick={() => onSelect(date)}
                 aria-pressed={isSelected}

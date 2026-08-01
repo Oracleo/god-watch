@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import { SettingsView } from "@/components/settings/settings-view";
 import { getTasks, getStatuses, getUserSettings } from "@/lib/queries";
 import { rangeISODates } from "@/lib/utils";
-import { buildExportRows } from "@/lib/export";
+import { buildExportRows } from "@/lib/export-helpers";
 
 export const metadata: Metadata = {
   title: "Settings · God Watch",
